@@ -1,9 +1,9 @@
-const path = require("path");
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: './src/index.js',
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
@@ -14,23 +14,32 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: 'babel-loader',
+        },
+      },
+      {
+        test: /\.(png|jpg|svg|ttf|eot|woff|woff2)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]',
         },
       },
       {
         test: /\.s[ac]ss$/i,
         use: [
-          "style-loader",
-          "css-loader",
-          "sass-loader",
+          'style-loader',
+          'css-loader',
+          'resolve-url-loader',
+          'sass-loader',
         ],
       },
-    ]
+    ],
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: 'src/index.html'
+      template: 'src/index.html',
     }),
+
   ],
 };

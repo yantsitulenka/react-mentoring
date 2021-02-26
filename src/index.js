@@ -1,11 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/App/App';
+import './styles.scss';
 
-import App from "./App";
+const rootElement = document.getElementById('root');
 
-const rootElement = document.getElementById("root");
-
-ReactDOM.render(
-  <App/>,
-  rootElement
-);
+ReactDOM.render(<App />, rootElement);
