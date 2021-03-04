@@ -1,0 +1,14 @@
+.movie-list {
+  &__movies-count {
+    margin: 10px 0;
+    color: #fff;
+    font-size: 18px;
+  }
+
+  &__list {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}

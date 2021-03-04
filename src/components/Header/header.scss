@@ -1,0 +1,28 @@
+.header {
+  height: 400px;
+
+  &__background {
+    position: absolute;
+    width: 100%;
+
+    img {
+      height: 400px;
+      width: 100%;
+      object-fit: cover;
+      opacity: .4;
+      filter: blur(5px);
+    }
+  }
+
+  &__logo-panel {
+    height: 80px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .container {
+    position: relative;
+  }
+}
