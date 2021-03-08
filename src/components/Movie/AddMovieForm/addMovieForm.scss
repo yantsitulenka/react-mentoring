@@ -1,0 +1,126 @@
+.add-movie-form {
+  background-color: #232323;
+  padding: 2rem 3rem;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+
+  &__title {
+    font-size: 30px;
+    font-weight: 200;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  &__close {
+    position: absolute;
+    right: 0;
+    margin: 15px;
+    top: 0;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    &-validation {
+      position: absolute;
+      font-size: 12px;
+      top: 80px;
+      color: #f65261;
+      font-weight: 200;
+    }
+
+    & > label {
+      color: #f65261;
+      text-transform: uppercase;
+      padding: 5px 0;
+      font-size: 17px;
+      letter-spacing: 1px;
+    }
+
+    & > input {
+      width: 400px;
+      color: #ffffff;
+      background-color: #555555;
+      border: none;
+      padding: 10px;
+      font-size: 17px;
+      border-radius: 3px;
+      margin: 5px 0 30px;
+
+      &:focus {
+        border: 2px solid #f65261;
+        outline: none;
+        padding: 8px;
+      }
+    }
+  }
+
+  &__selector {
+    width: 400px;
+    color: #ababab;
+    background-color: #555555;
+    position: relative;
+    border: none;
+    padding: 10px;
+    font-size: 17px;
+    border-radius: 3px;
+    margin: 5px 0 30px;
+    cursor: pointer;
+
+    &-list {
+      display: flex;
+      flex-direction: column;
+      background-color: #232323;
+      position: absolute;
+      width: calc(100% - 20px);
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      top: 80px;
+      z-index: 2;
+
+      label {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__id {
+    margin-bottom: 20px;
+    color: #555555;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+
+    .button {
+      padding: 17px 72px;
+      border-radius: 8px;
+      border: none;
+      color: #fff;
+      background-color: #f65261;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      font-family: 'Montserrat', sans-serif;
+
+      &.secondary {
+        border: 1px solid #f65261;
+        background: none;
+        padding: 15px 70px;;
+      }
+    }
+  }
+
+  .hidden {
+    display: none;
+  }
+}

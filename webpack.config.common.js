@@ -8,6 +8,12 @@ module.exports = {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  resolve: {
+    alias: {
+      components: path.resolve(__dirname, 'src/components'),
+    },
+    extensions: ['.js', '.jsx'],
+  },
   module: {
     rules: [
       {
@@ -32,6 +38,10 @@ module.exports = {
           'resolve-url-loader',
           'sass-loader',
         ],
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },

@@ -21,6 +21,12 @@
       "linebreak-style": ["error", "windows"],
       "indent": ["error", 2],
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-      "prefer-destructuring": ["error", {"object": true, "array": false}]
+      "prefer-destructuring": ["error", {"object": true, "array": false}],
+      "jsx-a11y/label-has-associated-control": [ 2, {
+        "labelComponents": ["CustomInputLabel"],
+        "labelAttributes": ["label"],
+        "controlComponents": ["CustomInput"],
+        "depth": 3
+      }]
     }
 }
