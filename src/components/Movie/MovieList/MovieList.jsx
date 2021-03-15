@@ -1,83 +1,64 @@
-import React from 'react';
-import movies from '../../../data/data';
+import React, { useState, useEffect } from 'react';
 import Movie from '../Movie/Movie';
-import './moviesList.scss';
 import PopUpWrapper from '../../PopUpWrapper/PopUpWrapper';
-import AddMovieForm from '../AddMovieForm/AddMovieForm';
+import MovieForm from '../MovieForm/MovieForm';
 import DeleteMovie from '../DeleteMovie/DeleteMovie';
+import './moviesList.scss';
+import movieList from '../../../data/data';
 
-class MovieList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      openAddEditForm: false,
-      openDeleteForm: false,
-      movieToEdit: {},
-      moviesList: [],
-    };
+const MovieList = () => {
+  const [movies, setMovies] = useState([]);
+  const [openEditForm, setOpenEditForm] = useState(false);
+  const [openDeleteForm, setOpenDeleteForm] = useState(false);
+  const [movieToEdit, setMovieToEdit] = useState({});
 
-    this.editMovie = this.editMovie.bind(this);
-    this.toggleEditMovieForm = this.toggleEditMovieForm.bind(this);
-    this.toggleDeleteMovieForm = this.toggleDeleteMovieForm.bind(this);
-  }
+  useEffect(() => {
+    setMovies(movieList);
+  }, []);
 
-  componentDidMount() {
-    this.setState({ moviesList: movies });
-  }
+  const editMovie = (id) => {
+    setOpenEditForm(!openEditForm);
+    setMovieToEdit(movies.find((el) => el.id === id));
+  };
 
-  editMovie(id) {
-    const { moviesList } = this.state;
-    this.toggleEditMovieForm();
-    this.setState({
-      movieToEdit: moviesList.find((el) => el.id === id),
-    });
-  }
+  const toggleEditMovieForm = () => {
+    setOpenEditForm(!openEditForm);
+  };
 
-  toggleEditMovieForm() {
-    const { openAddEditForm } = this.state;
-    this.setState({ openAddEditForm: !openAddEditForm });
-  }
+  const toggleDeleteMovieForm = () => {
+    setOpenDeleteForm(!openDeleteForm);
+  };
 
-  toggleDeleteMovieForm() {
-    const { openDeleteForm } = this.state;
-    this.setState({ openDeleteForm: !openDeleteForm });
-  }
-
-  render() {
-    const {
-      moviesList, movieToEdit, openAddEditForm, openDeleteForm,
-    } = this.state;
-    return (
-      <section className="movie-list container">
-        {openAddEditForm
-          ? (
-            <PopUpWrapper>
-              <AddMovieForm movie={movieToEdit} toggleForm={this.toggleEditMovieForm} />
-            </PopUpWrapper>
-          ) : ''}
-        {openDeleteForm
-          ? (
-            <PopUpWrapper>
-              <DeleteMovie toggleForm={this.toggleDeleteMovieForm} />
-            </PopUpWrapper>
-          ) : ''}
-        <div className="movie-list__movies-count">
-          {moviesList.length}
-          &nbsp;movies found
-        </div>
-        <div className="movie-list__list">
-          {moviesList.map((movie) => (
-            <Movie
-              key={movie.id}
-              data={movie}
-              editMovie={this.editMovie}
-              deleteMovie={this.toggleDeleteMovieForm}
-            />
-          ))}
-        </div>
-      </section>
-    );
-  }
-}
+  return (
+    <section className="movie-list container">
+      {openEditForm
+        ? (
+          <PopUpWrapper>
+            <MovieForm movie={movieToEdit} toggleForm={toggleEditMovieForm} />
+          </PopUpWrapper>
+        ) : ''}
+      {openDeleteForm
+        ? (
+          <PopUpWrapper>
+            <DeleteMovie toggleForm={toggleDeleteMovieForm} />
+          </PopUpWrapper>
+        ) : ''}
+      <div className="movie-list__movies-count">
+        {movies.length}
+        &nbsp;movies found
+      </div>
+      <div className="movie-list__list">
+        {movies.map((movie) => (
+          <Movie
+            key={movie.id}
+            data={movie}
+            editMovie={editMovie}
+            deleteMovie={toggleDeleteMovieForm}
+          />
+        ))}
+      </div>
+    </section>
+  );
+};
 
 export default MovieList;

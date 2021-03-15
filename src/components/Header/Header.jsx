@@ -1,55 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '../Logo/Logo';
 import AddMovieButton from '../Movie/AddMovieButton/AddMovieButton';
 import Search from '../Search/Search';
 import PopUpWrapper from '../PopUpWrapper/PopUpWrapper';
-import AddMovieForm from '../Movie/AddMovieForm/AddMovieForm';
-import backgroundImage from '../../images/background.jpg';
+import MovieForm from '../Movie/MovieForm/MovieForm';
+import HeaderBackground from '../HeaderBackground/HeaderBackground';
+
 import './header.scss';
 
-class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      openAddMovieForm: false,
-    };
+const Header = () => {
+  const [openAddMovieForm, toggleForm] = useState(false);
 
-    this.toggleForm = this.toggleForm.bind(this);
-  }
-
-  toggleForm() {
-    const { openAddMovieForm } = this.state;
-    this.setState({ openAddMovieForm: !openAddMovieForm });
-  }
-
-  render() {
-    const { openAddMovieForm } = this.state;
-    return (
-      <>
-        {openAddMovieForm
-          ? (
-            <PopUpWrapper>
-              <AddMovieForm toggleForm={this.toggleForm} />
-            </PopUpWrapper>
-          )
-          : ''}
-        <header className="header">
-          <div className="header__background">
-            <img src={backgroundImage} alt="background" />
+  return (
+    <>
+      {openAddMovieForm
+        ? (
+          <PopUpWrapper>
+            <MovieForm toggleForm={toggleForm} />
+          </PopUpWrapper>
+        )
+        : ''}
+      <header className="header">
+        <HeaderBackground />
+        <div className="container">
+          <div className="header__logo-panel">
+            <Logo />
+            <AddMovieButton toggleForm={toggleForm} />
           </div>
-          <div className="container">
-            <div className="header__logo-panel">
-              <Logo />
-              <AddMovieButton toggleForm={this.toggleForm} />
-            </div>
-            <div className="header__search-panel">
-              <Search />
-            </div>
+          <div className="header__search-panel">
+            <Search />
           </div>
-        </header>
-      </>
-    );
-  }
-}
+        </div>
+      </header>
+    </>
+  );
+};
 
 export default Header;

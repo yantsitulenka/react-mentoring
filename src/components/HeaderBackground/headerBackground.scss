@@ -1,0 +1,12 @@
+.header-background {
+  position: absolute;
+  width: 100%;
+
+  img {
+    height: 400px;
+    width: 100%;
+    object-fit: cover;
+    opacity: .4;
+    filter: blur(5px);
+  }
+}
