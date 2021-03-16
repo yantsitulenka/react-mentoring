@@ -1,6 +1,5 @@
 .movie {
   margin-bottom: 50px;
-  cursor: pointer;
   position: relative;
 
   img {
@@ -80,6 +79,15 @@
     &-name {
       font-size: 18px;
       padding: 5px 0;
+
+      a {
+        text-decoration: none;
+        color: #ababab;
+
+        &:hover {
+          color: #f65261;
+        }
+      }
     }
 
     &-tagline {

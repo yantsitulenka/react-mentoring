@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './movie.scss';
 
@@ -25,7 +26,7 @@ const Movie = (props) => {
       <div className="movie__info">
         <div>
           <div className="movie__info-name">
-            {title}
+            <Link to={`/movie/${id}`}>{title}</Link>
           </div>
           <div className="movie__info-tagline">
             {tagline}

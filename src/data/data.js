@@ -1,4 +1,4 @@
-const movies = [
+const movieList = [
   {
     id: 337167,
     title: 'Fifty Shades Freed',
@@ -55,4 +55,4 @@ const movies = [
   },
 ];
 
-export default movies;
+export default movieList;
