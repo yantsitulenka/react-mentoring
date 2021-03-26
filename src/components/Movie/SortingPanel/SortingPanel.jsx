@@ -1,25 +1,39 @@
 import React from 'react';
 import './sortingPanel.scss';
+import { connect } from 'react-redux';
+import { filterByGenre, sortAsync } from '../../../actions';
 
-const Header = () => (
+const SortingPanel = ({ filterByGenre, filter, sort }) => (
   <section className="sorting-panel container">
     <div className="sorting-panel__filter">
       <ul>
-        <li className="active">All</li>
-        <li>Documentary</li>
-        <li>Comedy</li>
-        <li>Horror</li>
-        <li>Crime</li>
+        <li className={filter === 'all' ? 'active' : ''} onClick={() => filterByGenre('all')}>All</li>
+        <li className={filter === 'documentary' ? 'active' : ''} onClick={() => filterByGenre('documentary')}>Documentary</li>
+        <li className={filter === 'comedy' ? 'active' : ''} onClick={() => filterByGenre('comedy')}>Comedy</li>
+        <li className={filter === 'horror' ? 'active' : ''} onClick={() => filterByGenre('horror')}>Horror</li>
+        <li className={filter === 'crime' ? 'active' : ''} onClick={() => filterByGenre('crime')}>Crime</li>
       </ul>
     </div>
     <div className="sorting-panel__sorting">
       <span>Sort by</span>
-      <select>
-        <option>Release date</option>
-        <option>Rating</option>
+      <select onChange={(e) => sort(e.target.value)}>
+        <option></option>
+        <option value="release_date">Release date</option>
+        <option value="vote_average">Rating</option>
       </select>
     </div>
   </section>
 );
 
-export default Header;
+const mapStateToProps = (state) => ({
+  filter: state.filter,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  filterByGenre: (genre) => dispatch(filterByGenre(genre)),
+  sort: (type) => dispatch(sortAsync(type)),
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SortingPanel);

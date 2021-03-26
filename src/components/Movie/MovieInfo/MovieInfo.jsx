@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { useParams} from 'react-router';
+import { connect } from 'react-redux';
+import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import HeaderBackground from '../../HeaderBackground/HeaderBackground';
 import Logo from '../../Logo/Logo';
 
 import './movieInfo.scss';
 
-import movieList from '../../../data/data';
-
-function useMovie(id) {
+function useMovie(movies, id) {
   const [movie, setMovie] = useState({});
 
   useEffect(() => {
-    setMovie(movieList.find((el) => el.id == id));
+    setMovie(movies.find((el) => el.id == id));
   }, []);
 
   return movie;
 }
 
-const MovieInfo = () => {
+const MovieInfo = ({ movies }) => {
   const { id } = useParams();
-  const movie = useMovie(id);
+  const movie = useMovie(movies, id);
 
   return (
     <div className="movie-info">
@@ -44,7 +43,11 @@ const MovieInfo = () => {
             <div className="movie-details__tagline">{movie?.tagline}</div>
             <div className="movie-details__time-info">
               <span>{movie?.release_date?.split('-')[0]}</span>
-              <span>{movie?.runtime} min</span>
+              <span>
+                {movie?.runtime}
+                {' '}
+                min
+              </span>
             </div>
             <div className="movie-details__overview">{movie?.overview}</div>
           </div>
@@ -54,4 +57,11 @@ const MovieInfo = () => {
   );
 };
 
-export default MovieInfo;
+const mapStateToProps = (state) => ({
+  movies: state.movies,
+});
+
+export default connect(
+  mapStateToProps,
+  null,
+)(MovieInfo);

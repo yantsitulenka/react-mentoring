@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import './movieForm.scss';
+import { closeEditMovieForm, editMovieAsync, closeAddMovieForm, addMovieAsync } from '../../../actions';
 
-const MovieForm = (props) => {
-  const { movie, toggleForm } = props;
-  const isEditForm = !!movie;
-  const [title, setTitle] = useState(movie?.title || '');
-  const [release_date, setReleaseDate] = useState(movie?.release_date || '');
-  const [poster_path, setPosterPath] = useState(movie?.poster_path || '');
-  const [overview, setOverview] = useState(movie?.overview || '');
-  const [runtime, setRuntime] = useState(movie?.runtime || '');
-  const [genres, setGenres] = useState(movie?.genres || '');
+const MovieForm = ({ tempMovie, closeEditMovieForm, closeAddMovieForm, submitAddMovie, submitEditMovie }) => {
+  const isEditForm = !!tempMovie.title;
+  const [title, setTitle] = useState(tempMovie?.title || '');
+  const [release_date, setReleaseDate] = useState(tempMovie?.release_date || '');
+  const [poster_path, setPosterPath] = useState(tempMovie?.poster_path || '');
+  const [overview, setOverview] = useState(tempMovie?.overview || '');
+  const [runtime, setRuntime] = useState(tempMovie?.runtime || '');
+  const [genres, setGenres] = useState(tempMovie?.genres || '');
   const [showGenreList, setShowGenreList] = useState(false);
   const [validationFail, setValidationFail] = useState(false);
 
@@ -23,8 +23,14 @@ const MovieForm = (props) => {
   const submitForm = () => {
     if (!title || !release_date || !poster_path || !overview || !runtime || !genres.length) {
       setValidationFail(true);
+    } else if (isEditForm){
+      submitEditMovie({
+        ...tempMovie, title, release_date, poster_path, overview, runtime: parseInt(runtime, 10), genres,
+      });
     } else {
-      toggleForm();
+      submitAddMovie({
+        title, release_date, poster_path, overview, runtime: parseInt(runtime, 10), genres,
+      });
     }
   };
 
@@ -41,14 +47,14 @@ const MovieForm = (props) => {
   return (
     <div className="add-movie-form">
       <div className="add-movie-form__close" />
-      <span className="add-movie-form__close" onClick={() => toggleForm()} role="button">&#10006;</span>
+      <span className="add-movie-form__close" onClick={() => (isEditForm ? closeEditMovieForm() : closeAddMovieForm())} role="button">&#10006;</span>
       <h2 className="add-movie-form__title">Add Movie</h2>
 
       {isEditForm
         ? (
           <div className="add-movie-form__fields">
             <label className="add-movie-form__label" htmlFor="title">Id</label>
-            <div className="add-movie-form__id">{movie.id}</div>
+            <div className="add-movie-form__id">{tempMovie.id}</div>
           </div>
         ) : ''}
 
@@ -114,9 +120,17 @@ const MovieForm = (props) => {
   );
 };
 
-MovieForm.propTypes = {
-  toggleForm: PropTypes.func.isRequired,
-  movie: PropTypes.object,
-};
+const mapStateToProps = (state) => ({
+  tempMovie: state.movieToEdit,
+});
 
-export default MovieForm;
+const mapDispatchToProps = (dispatch) => ({
+  closeEditMovieForm: () => dispatch(closeEditMovieForm()),
+  closeAddMovieForm: () => dispatch(closeAddMovieForm()),
+  submitEditMovie: (movie) => dispatch(editMovieAsync(movie)),
+  submitAddMovie: (movie) => dispatch(addMovieAsync(movie)),
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MovieForm);

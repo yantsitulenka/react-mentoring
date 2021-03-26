@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import Logo from '../Logo/Logo';
 import AddMovieButton from '../Movie/AddMovieButton/AddMovieButton';
 import Search from '../Search/Search';
@@ -8,32 +9,33 @@ import HeaderBackground from '../HeaderBackground/HeaderBackground';
 
 import './header.scss';
 
-const Header = () => {
-  const [openAddMovieForm, toggleForm] = useState(false);
-
-  return (
-    <>
-      {openAddMovieForm
-        ? (
-          <PopUpWrapper>
-            <MovieForm toggleForm={toggleForm} />
-          </PopUpWrapper>
-        )
-        : ''}
-      <header className="header">
-        <HeaderBackground />
-        <div className="container">
-          <div className="header__logo-panel">
-            <Logo />
-            <AddMovieButton toggleForm={toggleForm} />
-          </div>
-          <div className="header__search-panel">
-            <Search />
-          </div>
+const Header = ({ openAddMovieForm }) => (
+  <>
+    {openAddMovieForm
+      ? (
+        <PopUpWrapper>
+          <MovieForm />
+        </PopUpWrapper>
+      )
+      : ''}
+    <header className="header">
+      <HeaderBackground />
+      <div className="container">
+        <div className="header__logo-panel">
+          <Logo />
+          <AddMovieButton />
         </div>
-      </header>
-    </>
-  );
-};
+        <div className="header__search-panel">
+          <Search />
+        </div>
+      </div>
+    </header>
+  </>
+);
+const mapStateToProps = (state) => ({
+  openAddMovieForm: state.openMovieCreateForm,
+});
 
-export default Header;
+export default connect(
+  mapStateToProps,
+)(Header);

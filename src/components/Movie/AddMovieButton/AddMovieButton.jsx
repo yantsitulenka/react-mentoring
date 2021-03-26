@@ -1,6 +1,14 @@
 import React from 'react';
 import './addMovieButton.scss';
+import { connect } from 'react-redux';
+import { openAddMovieForm } from '../../../actions';
 
-const AddMovieButton = (props) => <button type="button" className="add-movie" onClick={props.toggleForm}>+ Add Movie</button>;
+const AddMovieButton = ({ openAddMovieForm }) => <button type="button" className="add-movie" onClick={openAddMovieForm}>+ Add Movie</button>;
 
-export default AddMovieButton;
+const mapDispatchToProps = (dispatch) => ({
+  openAddMovieForm: () => dispatch(openAddMovieForm()),
+});
+export default connect(
+  null,
+  mapDispatchToProps,
+)(AddMovieButton);

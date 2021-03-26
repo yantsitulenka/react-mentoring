@@ -1,59 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { setMoviesAsync } from '../../../actions';
 import Movie from '../Movie/Movie';
 import PopUpWrapper from '../../PopUpWrapper/PopUpWrapper';
 import MovieForm from '../MovieForm/MovieForm';
 import DeleteMovie from '../DeleteMovie/DeleteMovie';
 import './moviesList.scss';
-import movieList from '../../../data/data';
 
-const MovieList = () => {
-  const [movies, setMovies] = useState([]);
-  const [openEditForm, setOpenEditForm] = useState(false);
-  const [openDeleteForm, setOpenDeleteForm] = useState(false);
-  const [movieToEdit, setMovieToEdit] = useState({});
-
+const MovieList = ({ movies, setMoviesFromApi, openMovieEditForm, openMovieDeleteForm, total, setMoviesError }) => {
   useEffect(() => {
-    setMovies(movieList);
+    setMoviesFromApi();
   }, []);
-
-  const editMovie = (id) => {
-    setOpenEditForm(!openEditForm);
-    setMovieToEdit(movies.find((el) => el.id === id));
-  };
-
-  const toggleEditMovieForm = () => {
-    setOpenEditForm(!openEditForm);
-  };
-
-  const toggleDeleteMovieForm = () => {
-    setOpenDeleteForm(!openDeleteForm);
-  };
 
   return (
     <section className="movie-list container">
-      {openEditForm
+      {openMovieEditForm
         ? (
           <PopUpWrapper>
-            <MovieForm movie={movieToEdit} toggleForm={toggleEditMovieForm} />
+            <MovieForm />
           </PopUpWrapper>
         ) : ''}
-      {openDeleteForm
+      {openMovieDeleteForm
         ? (
           <PopUpWrapper>
-            <DeleteMovie toggleForm={toggleDeleteMovieForm} />
+            <DeleteMovie />
           </PopUpWrapper>
         ) : ''}
       <div className="movie-list__movies-count">
-        {movies.length}
+        {total}
         &nbsp;movies found
       </div>
       <div className="movie-list__list">
-        {movies.map((movie) => (
+        { setMoviesError
+          ? (
+            <h1>Sorry, it was a problem with movies loading. Please try again later.</h1>
+          ) : '' }
+        {movies?.map((movie) => (
           <Movie
             key={movie.id}
             data={movie}
-            editMovie={editMovie}
-            deleteMovie={toggleDeleteMovieForm}
           />
         ))}
       </div>
@@ -61,4 +46,19 @@ const MovieList = () => {
   );
 };
 
-export default MovieList;
+const mapStateToProps = (state) => ({
+  movies: state.movies,
+  openMovieEditForm: state.openMovieEditForm,
+  openMovieDeleteForm: state.openMovieDeleteForm,
+  total: state.total,
+  setMoviesError: state.setMoviesError,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setMoviesFromApi: () => dispatch(setMoviesAsync()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MovieList);
