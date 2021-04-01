@@ -1,5 +1,4 @@
 import React from 'react';
-import movies from '../../data/data';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -12,7 +11,7 @@ class ErrorBoundary extends React.Component {
   }
 
   render() {
-    if (this.state.hasError || !Array.isArray(movies)) {
+    if (this.state.hasError) {
       return (
         <div className="container">
           <h1>Something went wrong. Please try again later</h1>

@@ -11,4 +11,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+
+  &__error {
+    color: #f65261;
+    margin-bottom: 1rem;
+  }
 }
