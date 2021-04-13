@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import './search.scss';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { searchMovieAsync } from '../../actions';
+import './search.scss';
 
-const Search = ({searchMovie}) => {
+const Search = ({ searchMovie }) => {
   const [query, setQuery] = useState('');
 
   return (
@@ -13,7 +14,7 @@ const Search = ({searchMovie}) => {
       </h2>
       <div className="search__panel">
         <input className="search__field" type="text" placeholder="What do you want to watch?" onChange={(e) => setQuery(e.target.value)} />
-        <button className="search__button" type="button" onClick={() => searchMovie(query)}>Search</button>
+        <Link className="search__button" to={`/search/${query}`} onClick={() => searchMovie(query)}>Search</Link>
       </div>
     </div>
   );

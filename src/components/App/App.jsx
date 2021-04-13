@@ -13,6 +13,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import MovieInfo from '../Movie/MovieInfo/MovieInfo';
 import rootReducer from '../../reducers';
 import root from '../../sagas';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
@@ -30,22 +31,58 @@ export default function App() {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route path="/movie/:id">
+          <Route exact path="/movie/:id">
             <MovieInfo />
+            <Main>
+              <SortingPanel />
+              <ErrorBoundary>
+                <MovieList />
+              </ErrorBoundary>
+            </Main>
+            <Footer>
+              <Logo />
+            </Footer>
           </Route>
-          <Route path="/">
+          <Route exact path="/search/:query">
             <Header />
+            <Main>
+              <SortingPanel />
+              <ErrorBoundary>
+                <MovieList />
+              </ErrorBoundary>
+            </Main>
+            <Footer>
+              <Logo />
+            </Footer>
+          </Route>
+          <Route exact path={['/search/:query', '/search/']}>
+            <Header />
+            <Main>
+              <SortingPanel />
+              <ErrorBoundary>
+                <MovieList />
+              </ErrorBoundary>
+            </Main>
+            <Footer>
+              <Logo />
+            </Footer>
+          </Route>
+          <Route exact path="/">
+            <Header />
+            <Main>
+              <SortingPanel />
+              <ErrorBoundary>
+                <MovieList />
+              </ErrorBoundary>
+            </Main>
+            <Footer>
+              <Logo />
+            </Footer>
+          </Route>
+          <Route>
+            <NotFoundPage />
           </Route>
         </Switch>
-        <Main>
-          <SortingPanel />
-          <ErrorBoundary>
-            <MovieList />
-          </ErrorBoundary>
-        </Main>
-        <Footer>
-          <Logo />
-        </Footer>
       </Router>
     </Provider>
   );

@@ -36,7 +36,7 @@ function* fetchDeleteMovieAsync(action) {
 
 function* fetchSearchMovie(action) {
   try {
-    const response = yield call(() => searchMovieApi(action.sortType));
+    const response = yield call(() => searchMovieApi(action.query));
     yield put(setMoviesAsyncSuccess(response.data, response.totalAmount));
   } catch (error) {
     yield put(setMoviesAsyncError());
