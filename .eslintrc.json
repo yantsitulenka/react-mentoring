@@ -17,6 +17,17 @@
     "plugins": [
         "react"
     ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.test.js",
+          "**/*.test.jsx"
+        ],
+        "env": {
+          "jest": true
+        }
+      }
+    ],
     "rules": {
       "linebreak-style": ["error", "windows"],
       "indent": ["error", 2],
