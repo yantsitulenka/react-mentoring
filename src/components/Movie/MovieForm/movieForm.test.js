@@ -2,8 +2,15 @@ import React from 'react';
 import rerender from 'react-test-renderer';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import {
+  render, fireEvent, getByText,
+} from '@testing-library/react';
+import { shallow, configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import MovieForm from './MovieForm';
 import PopUpWrapper from '../../PopUpWrapper/PopUpWrapper';
+
+configure({ adapter: new Adapter() });
 
 describe('when MovieForm', () => {
   test('then snapshot created for add movie', () => {
@@ -57,4 +64,24 @@ describe('when MovieForm', () => {
     const tree = movieFilterComponent.toJSON();
     expect(tree).toMatchSnapshot();
   });
+
+  it('Test click on genre', () => {
+    const initialStore = {
+      movieToEdit: {},
+    };
+    const store = configureStore([])(initialStore);
+    const { container } = render(
+      <Provider store={store}>
+        <PopUpWrapper>
+          <MovieForm />
+        </PopUpWrapper>
+      </Provider>,
+    );
+    const countValue = getByText(container, 'Select Genre');
+    const list = container.querySelector('.add-movie-form__selector-list');
+    expect(list.classList.contains('hidden')).toBe(true);
+    fireEvent.click(countValue);
+    expect(list.classList.contains('hidden')).toBe(false);
+  });
+
 });

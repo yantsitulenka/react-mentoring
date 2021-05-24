@@ -137,7 +137,7 @@ const MovieForm = ({
 
             <div className="add-movie-form__buttons">
               <button type="button" className="button secondary" onClick={resetForm}>Reset</button>
-              <button type="submit" className="button">Submit</button>
+              <button type="submit" className="button asd">Submit</button>
             </div>
           </Form>
         )}
